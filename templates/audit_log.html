@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div>Audit Log</div>
+    <table>
+        <tr><th>Timestamp</th><th>EmployeeID</th><th>Name</th><th>Report Name</th></tr>
+    {% for row in result_set %}
+        {% if row['user_districts'] == total_districts %}
+        <tr style="background-color: yellow;"><td>{{row['Date_Time']}}</td><td>{{row['EmployeeID']}}</td><td>{{row['LastName']}}, {{row['FirstName']}}</td><td>{{row['ReportName']}}</td></tr>
+        {% else %}
+        <tr><td>{{row['Date_Time']}}</td><td>{{row['EmployeeID']}}</td><td>{{row['LastName']}}, {{row['FirstName']}}</td><td>{{row['ReportName']}}</td></tr>        
+        {% endif %}
+
+        {% endfor %}
+    </table>
+{% endblock %}

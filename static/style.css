@@ -1,0 +1,7 @@
+table, th, td {
+    border: 1px solid black;
+  }
+
+tr td:first-child {padding-left:0px;}
+tr th:first-child {padding-left:0px;}
+td {padding:10px 25px 10px 25px;}

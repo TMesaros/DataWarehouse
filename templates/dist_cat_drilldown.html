@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>District Category Report Drilldown</p>
+    <div>District Category Drilldown for the period of {{sales_month}} {{sales_year}} for district {{district}} and category {{category}} </div>
+    <div></div>
+    <div>
+        <table>
+            <tr><th>Store Number</th><th>State</th><th>City</th></tr>
+        {% for row in result_set %}
+            <tr><td>{{row['StoreNumber']}}</td><td>{{row['State']}}</td><td>{{row['CityName']}}</td></tr>
+        {% endfor %}
+        </table>
+    </div>
+
+    {% endblock %}

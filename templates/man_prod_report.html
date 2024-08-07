@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Manufacturer's Report {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>Manufacturerer Product Report</p>
+    <table>
+        <tr><th>Manufacturer Name</th><th>Total Products</th><th>Avg Price</th><th>Min Price</th><th>Max Price</th></tr>
+
+    {% for row in result_set %}
+        <tr><td>{{row['ManufacturerName']}}</td><td>{{row['TotalProducts']}}</td><td>{{row['AvgPrice']}}</td><td>{{row['MinPrice']}}</td><td>{{row['MaxPrice']}}</td>
+        <td><form method="post">
+            <input type="hidden" name="ManufacturerName" value="{{row['ManufacturerName']}}">
+            <input type="hidden" name="TotalProducts" value="{{row['TotalProducts']}}">
+            <input type="hidden" name="AvgPrice" value="{{row['AvgPrice']}}">
+            <input type="hidden" name="MinPrice" value="{{row['MinPrice']}}">
+            <input type="hidden" name="MaxPrice" value="{{row['MaxPrice']}}">
+            <input type="submit" value="Drilldown" name="drilldown">            
+        </form>
+        </td></tr>
+    {% endfor %}
+    </table>
+    {% endblock %}

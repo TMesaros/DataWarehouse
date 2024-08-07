@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} Manufacturer's Report {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>Manufacturer Product Drilldown</p>
+    <table>
+        <tr><th>Manufacturer Name</th><th>Total Products</th><th>Avg Price</th><th>Min Price</th><th>Max Price</th></tr>
+        <tr><td>{{ManufacturerName}}</td><td>{{TotalProducts}}</td><td>{{AvgPrice}}</td><td>{{MinPrice}}</td><td>{{MaxPrice}}</td>
+    </tr></table>
+    <br>
+    <br>
+    <table>
+        <tr>
+            <th>Product ID</th><th>Product Name</th><th>Categories</th><th>Price</th>
+        </tr>
+        {% set ns = namespace(cat_string = '') %}
+        {% set skip = False %}
+
+        {% for i in range(num_records) %}        
+            {% if ns.cat_string == '' %}
+                {% set ns.cat_string = result_set[i]['CategoryName'] %}
+            {% else %}
+                {% set ns.cat_string = (result_set[i]['CategoryName'] + ", " + ns.cat_string) %}
+            {% endif %}
+            {% if (i+1) < num_records %}
+                {% if result_set[i]['PID'] == result_set[i+1]['PID'] %}
+                    {% set skip = True %}
+                {% endif %}
+            {% endif %}
+            {% if skip == False %}            
+                <td>{{result_set[i]['PID']}}</td>
+                <td>{{result_set[i]['ProductName']}}</td>
+                <td>{{ns.cat_string}}{% set ns.cat_string = '' %}
+            </td>
+            <td>{{result_set[i]['RetailPrice']}}</td>
+                </tr>
+            {% endif %}
+            {% set skip = False %}
+        {% endfor %}
+    </table>
+{% endblock %}

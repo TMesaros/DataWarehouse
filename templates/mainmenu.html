@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+<p>Welcome {{FirstName}} {{LastName}}</p>
+<div>Number of Stores: {{store_count}}</div>
+<div>Number of Cities: {{city_count}}</div>
+<div>Number of Districts: {{district_count}}</div>
+<div>Number of Manufacturers: {{man_count}}</div>
+<div>Number of Products: {{product_count}}</div>
+<div>Number of Categories: {{cat_count}}</div>
+<div>Number of Holidays: {{holiday_count}}</div>
+<div></div>
+
+<br></br>
+<div><b>Reports:</b></div>
+<a href="/man_prod_report"</a>Manufacturer's Report</a>
+<div></div>
+<a href="/cat_report"</a>Category Report</a>
+<div></div>
+<a href="/pred_rev_report"</a>Predicted Revenue Report</a>
+<div></div>
+<a href="/ac_report"</a>Air Conditioning Report</a>
+
+{% if all_dists %}
+<div></div>
+<a href="/store_by_year_report"</a>Store by Year by Revenue Report</a>
+<div></div>
+<a href="/dist_cat_report"</a>District Category Report</a>
+<div></div>
+<a href="/rev_by_pop_report"</a>Revenue by Population Report</a>
+{% endif %}
+{% if audit_log_view %}
+<br></br>    
+<div>Audit Log permission confirmed.</div>
+<a href="/audit_log"</a>View Audit Log</a>
+{% endif %}
+<br></br>
+<div>Holidays:</div>
+<a href="/holiday"</a>View Holidays</a>
+
+{% endblock %}

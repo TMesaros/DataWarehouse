@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>District Category Report</p>
+    <label for="year/month">Select sales year and month:</label>
+    <form method="post">
+        <select name="Month Year">
+            {% for row in sales_dates %}
+                <option value="{{row['SoldMonth']}} {{row['SoldYear']}}">{{row['SoldMonth']}} {{row['SoldYear']}}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="GetReport" value="1"/>
+        <input type="submit" value="Get Report"/>
+    </form>
+    {% if result_set %}
+        <div>Results for {{sales_month}} {{sales_year}} </div>
+        <table>
+            <tr><th>Category Name</th><th>Highest Selling District Number</th><th>Quantity Sold</th></tr>
+
+        {% for row in result_set %}
+            <tr><td>{{row['CategoryName']}}</td><td>{{row['DistrictNumber']}}</td><td>{{row['Quantity']}}</td>
+            <td><form method="post">
+                <input type="hidden" name="CategoryName" value="{{row['CategoryName']}}">
+                <input type="hidden" name="DistrictNumber" value="{{row['DistrictNumber']}}">
+                <input type="hidden" name="Quantity" value="{{row['Quantity']}}">
+                <input type="hidden" name="Month" value="{{sales_month}}">
+                <input type="hidden" name="Year" value="{{sales_year}}">
+                <input type="submit" name="Drilldown" value="drilldown">            
+            </form>
+            </td></tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

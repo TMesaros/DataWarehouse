@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>Predicted Revenue Report</p>
+    <table>
+        <tr><th>PID</th><th>Product Name</th><th>Retail Price</th><th>Total Quantity</th><th>Discount Quantity</th><th>Retail Quantity</th><th>Actual Revenue</th><th>Predicted Revenue</th><th>Difference</th></tr>
+
+    {% for row in result_set %}
+        <tr><td>{{row['PID']}}</td><td>{{row['ProductName']}}</td><td>{{row['RetailPrice']}}</td><td>{{row['TotalQuantity']}}</td><td>{{row['DiscountQuantity']}}</td>
+            <td>{{row['RetailQuantity']}}</td><td>{{row['ActualRevenue']}}</td><td>{{row['PredictedRevenue']}}</td><td>{{row['Difference']}}</td></tr>
+    {% endfor %}
+    </table>
+{% endblock %}

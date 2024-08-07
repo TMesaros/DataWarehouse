@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>AC REPORT</p>
+    <table>
+        <tr><th>Year</th><th>Total Sales</th><th>AvgSales</th><th>Groundhog Day Sales</th></tr>
+
+    {% for row in result_set %}
+        <tr><td>{{row['SalesYear']}}</td><td>{{row['TotalQuantity']}}</td><td>{{row['AvgQuantity']}}</td><td>{{row['GHQuantity']}}</td></tr>
+    {% endfor %}
+    </table>
+{% endblock %}

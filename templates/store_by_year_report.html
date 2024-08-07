@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>Store by year report</p>
+    <form method="post">
+        <select name="State">
+            {% for row in state_list %}
+                <option value="{{row['State']}}">{{row['State']}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Get Report"/>
+    </form>
+    {% if current_state %}
+    <div>Revenue for each store by year in the state of {{current_state}}</div>
+    {% endif %}
+    {% if result_set %}
+    <table>
+        <tr><th>Store ID</th><th>City Name</th><th>Year</th><th>Total Revenue</th></tr>
+
+    {% for row in result_set %}
+        <tr><td>{{row['StoreNumber']}}</td><td>{{row['CityName']}}</td><td>{{row['StoreYear']}}</td><td>{{row['Revenue']}}</td></tr>
+    {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p> Revenue by population report</p>
+    <table>
+        <tr><th></th><th>Small</th><th>Medium</th><th>Large</th><th>Very Large</th>
+        {% set ns = namespace(year = result_set[0]['RevYear'] - 1) %}
+        {% set count = namespace(x = 0) %}
+        {% set start = namespace(start = True) %}
+        {% for row in result_set %}
+
+            {% if row['RevYear'] != ns.year %}
+                {% set ns.year = row['RevYear'] %}
+                {% if start.start == False %}
+                    {% for blah in range(4) %}
+                        {% if count.x < 4 %}
+                            <td>0</td>
+                            {% set count.x = count.x + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+            </tr><tr><td>{{row['RevYear']}}</td>
+            {% set count.x = 0 %}
+            {% set start.start = False %}
+            {% endif %}
+
+            {% if row['CityType'] != 'Small' and count.x == 0 %}
+                <td>0</td>
+                {% set count.x = 1 %}
+            {% endif %}
+
+            {% if row['CityType'] != 'Medium' and count.x == 1 %}
+                <td>0</td>
+                {% set count.x = 2 %}
+            {% endif%}
+
+            {% if row['CityType'] != 'Large' and count.x == 2 %}
+                <td>0</td>
+                {% set count.x = 3 %}
+            {% endif %}
+
+
+            <td>{{row['Revenue']}}</td>
+            {% set count.x = count.x + 1 %}
+            {% endfor %}
+    </tr></table>
+
+    {% endblock %}

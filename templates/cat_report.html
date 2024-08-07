@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>Category Report</p>
+    <table>
+        <tr><th>Category Name</th><th>Number of Products</th><th>Number of Manufacturers</th><th>Avg Price</th></tr>
+
+    {% for row in result_set %}
+        <tr><td>{{row['CategoryName']}}</td><td>{{row['ProductNum']}}</td><td>{{row['ManNum']}}</td><td>{{row['AvgPrice']}}</td></tr>
+    {% endfor %}
+    </table>
+    {% endblock %}

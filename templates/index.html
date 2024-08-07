@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Homepage{% endblock %}
+{% block content %} 
+{% for x in yojimbo %}        
+<p>{{x}}</p>
+{% endfor %}
+{% for x in range(10)%}
+    {% if x % 2 == 0 %}
+    <p>{{x}}</p>
+    {% endif %}
+{% endfor %}
+{% endblock %}

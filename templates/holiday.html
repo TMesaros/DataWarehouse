@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div></div>
+    {% if user_district_all %}
+    <h2>Add Holiday</h2>
+            <form method="post">
+                <label>Day</label><input type="text" name="day">
+                <label>Month</label><input type="text" name="month">
+                <label>Year</label><input type="text" name="year">
+                <label>Holiday Name</label><input type="text" name="holiday_name">
+                <input type ="hidden" name="user" value="{{user}}">
+                <input type="submit" name="AddHoliday" value="Add Holiday"/>
+            </form>
+        {% endif %}
+        <br></br>
+        <h2>Current Holidays:</h2>
+        <table>
+            <tr><th>Holiday Date</th><th>Holiday Name</th></tr>
+            {% for row in result_set %}
+            <tr><td>{{row['HolidayDate']}}</td><td>{{row['HolidayName']}}</td></tr>
+            {% endfor %}
+        </table>
+        {% endblock %}
